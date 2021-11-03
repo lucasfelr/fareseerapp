@@ -8,9 +8,8 @@ class Cadastrar extends StatefulWidget {
 }
 
 class _CadastrarState extends State<Cadastrar> {
-  String email = '';
+  String user = '';
   String password = '';
-  String aux = '';
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +25,42 @@ class _CadastrarState extends State<Cadastrar> {
               children: [
                 TextField(
                   onChanged: (text) {
-                    aux = text;
+                    user = text;
                   },
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Nome',
+                    labelText: 'Username',
                     border: OutlineInputBorder(),
                   ),
+                ),
+                TextField(
+                  onChanged: (text) {
+                    password = text;
+                  },
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
                 ),
                 SizedBox(height: 15),
                 RaisedButton(
                   onPressed: () {
-                    globals.criancas[globals.iterador] = aux;
-                    globals.criancasValue[globals.iterador] = false;
-                    globals.iterador = (globals.iterador + 1) % 4;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => MyApp()),
                     );
                   },
-                  child: Text('Cadastrar'),
+                  child: Text('Login'),
+                ),
+                SizedBox(height: 15),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => MyApp()),
+                    );
+                  },
+                  child: Text('Register'),
                 ),
               ],
             ),
