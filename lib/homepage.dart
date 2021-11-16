@@ -1,10 +1,24 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
+import 'package:ola_mundo/camera.dart' as foto;
+import 'globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'appcontroller.dart';
-import 'appcontroller.dart';
-import 'appcontroller.dart';
+import 'credits.dart';
+import 'history.dart';
+import 'login.dart';
 import 'nfcpage.dart';
+import 'hcepage.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
+
+  final CameraDescription camera;
   @override
   State<HomePage> createState() {
     return HomePageState();
@@ -12,54 +26,77 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  String _counter = "", _value = "";
-  int creditos = AppController.instance.creditos;
-
-  Future _incrementCounter() async {
-    setState(() {
-      _value = _counter;
-      print(_value);
-      if (_value == "https://www.kaspersky.com") {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MyApp()),
-        );
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
-        actions: [
-          CustomSwitch(),
-        ],
+        centerTitle: true,
+        title: Text('FareSeer - Home'),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Créditos: $creditos', style: TextStyle(fontSize: 20)),
-            Container(
-              height: 250,
-            ),
-            Container(
-                child: Row(
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Seja bem vindo, Lucas'),
+                RichText(
+                  text: TextSpan(
+                    text: 'Status: Validated ',
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                ),
+                SizedBox(height: 15),
+                RaisedButton(
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => Profile(camera: widget.camera)),
+                    );
+                  },
+                  child: Text('Profile'),
+                ),
+                SizedBox(height: 15),
+                RaisedButton(
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => HCEpage(camera: widget.camera)),
+                    );
+                  },
+                  child: Text('Pay'),
+                ),
+                SizedBox(height: 15),
+                RaisedButton(
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => History(camera: widget.camera)),
+                    );
+                  },
+                  child: Text('History'),
+                ),
+                SizedBox(height: 15),
+                RaisedButton(
+                  color: Colors.grey,
+                  onPressed: () {
+                    globals.id = null;
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => Login(camera: widget.camera)),
+                    );
+                  },
+                  child: Text('Logout'),
+                ),
               ],
-            )),
-          ],
+            ),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.settings_overscan),
-        onPressed: _incrementCounter,
       ),
     );
   }

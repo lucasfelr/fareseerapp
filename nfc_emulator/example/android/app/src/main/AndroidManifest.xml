@@ -1,12 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ola_mundo"
-    xmlns:tools="http://schemas.Android.com/tools">
+    package="io.flutter.plugins.nfc_emulator_example">
     <uses-permission android:name="android.permission.NFC" />
     <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-feature android:name="android.hardware.nfc.hce" android:required="false" />
     <uses-permission android:name="android.permission.VIBRATE" />
-   <application
-        android:label="ola_mundo"
+    <!-- io.flutter.app.FlutterApplication is an android.app.Application that
+         calls FlutterMain.startInitialization(this); in its onCreate method.
+         In most cases you can leave this as-is, but you if you want to provide
+         additional functionality it is fine to subclass or reimplement
+         FlutterApplication and put your custom class here. -->
+    <application
+        android:name="io.flutter.app.FlutterApplication"
+        android:label="nfc_emulator_example"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -38,22 +43,22 @@
             </intent-filter>
         </activity>
         <service
-	        android:name="io.flutter.plugins.nfc_emulator.NfcEmulatorService"
-	        android:exported="true"
-	        android:permission="android.permission.BIND_NFC_SERVICE">
+            android:name="io.flutter.plugins.nfc_emulator.NfcEmulatorService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
 
-	        <!-- Intent filter indicating that we support card emulation. -->
-	        <intent-filter>
-		        <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
-		        <category android:name="android.intent.category.DEFAULT" />
-	        </intent-filter>
-	        <!--
-			        Required XML configuration file, listing the AIDs that we are emulating cards
-			        for. This defines what protocols our card emulation service supports.
-	        -->
-	        <meta-data
-		        android:name="android.nfc.cardemulation.host_apdu_service"
-		        android:resource="@xml/aid_list" />
+            <!-- Intent filter indicating that we support card emulation. -->
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!--
+                 Required XML configuration file, listing the AIDs that we are emulating cards
+                 for. This defines what protocols our card emulation service supports.
+            -->
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/aid_list" />
         </service>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

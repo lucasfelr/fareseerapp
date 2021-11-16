@@ -1,9 +1,16 @@
 import 'dart:typed_data';
-
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
+import 'homepage.dart';
+
 class MyApp extends StatefulWidget {
+  const MyApp({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
+  final CameraDescription camera;
   @override
   State<StatefulWidget> createState() => MyAppState();
 }
@@ -15,7 +22,17 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('NfcManager Plugin Example')),
+        appBar: AppBar(
+          title: Text('NfcManager Plugin Example'),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (context) => HomePage(camera: widget.camera)),
+              );
+            },
+          ),
+        ),
         body: SafeArea(
           child: FutureBuilder<bool>(
             future: NfcManager.instance.isAvailable(),
