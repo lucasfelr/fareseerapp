@@ -148,7 +148,7 @@ class DisplayPictureScreen extends StatelessWidget {
           );
         },
         child: const Icon(Icons.check),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.red,
       ),
     );
   }

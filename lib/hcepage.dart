@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'globals.dart' as globals;
 import 'package:flutter/services.dart';
 import 'package:nfc_emulator/nfc_emulator.dart';
 import 'package:ola_mundo/homepage.dart';
@@ -56,7 +56,8 @@ class _HCEpageState extends State<HCEpage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('NFC Emulator Example'),
+          backgroundColor: Colors.red,
+          title: const Text('FareSeer - Paying Page'),
           leading: BackButton(
             onPressed: () {
               Navigator.of(context).pushReplacement(
@@ -72,12 +73,10 @@ class _HCEpageState extends State<HCEpage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Version: $_platformVersion'),
-                SizedBox(height: 20.0),
                 Text('Status: $_nfcStatus'),
                 SizedBox(height: 40.0),
                 RaisedButton(
-                    child: Text(_started ? "Stop Emulator" : "Start Emulator"),
+                    child: Text(_started ? "Stop NFC" : "Pay"),
                     onPressed: startStopEmulator),
               ]),
         ),
@@ -90,7 +89,7 @@ class _HCEpageState extends State<HCEpage> {
       await NfcEmulator.stopNfcEmulator();
     } else {
       await NfcEmulator.startNfcEmulator(
-          "666B65630001", "cd22c716", "79e64d05ed6475d3acf405d6a9cd506b");
+          "666B65630001", globals.id, "79e64d05ed6475d3acf405d6a9cd506b");
     }
     setState(() {
       _started = !_started;
