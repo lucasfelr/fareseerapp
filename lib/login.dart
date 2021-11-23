@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:ola_mundo/homepage.dart';
 import 'globals.dart' as globals;
-import 'nfcpage.dart';
 import 'register.dart';
 import 'package:postgres/postgres.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({
@@ -21,8 +24,25 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String user = '';
   String password = '';
+  final storage = new LocalStorage('app.22c374c1.js');
+  void setlocal(state, userData) {
+    print("setting user data");
+    print(userData);
+    state["user"] = userData["user"];
+    if (userData["token"] != "") {
+      state["token"] = userData["token"];
+    }
+    if (userData["user"]["user_type"] == "ADMIN") {
+      state["isAdmin"] = true;
+    }
+    storage.setItem("state", jsonEncode(state));
+  }
 
-  Future<void> _showMyDialog() async {
+  void clearstorage() {
+    storage.deleteItem("state");
+  }
+
+  Future<void> _showMyDialog(String error) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -31,8 +51,8 @@ class _LoginState extends State<Login> {
           title: const Text('Error'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
-                Text('Invalid Username or Password'),
+              children: <Widget>[
+                Text(error),
               ],
             ),
           ),
@@ -93,21 +113,26 @@ class _LoginState extends State<Login> {
                 RaisedButton(
                   color: Colors.grey,
                   onPressed: () async {
-                    List<
-                        List<
-                            dynamic>> results = await globals.connection.query(
-                        "SELECT id FROM users WHERE username = @aValue and password = @bvalue",
-                        substitutionValues: {
-                          "aValue": user,
-                          "bvalue": password
-                        });
+                    var response = await http.post(
+                        Uri.parse(globals.url + 'session'),
+                        headers: <String, String>{
+                          'Content-Type': 'application/json'
+                        },
+                        body: jsonEncode({
+                          "username": user,
+                          "password": password,
+                        }));
 
-                    for (final row in results) {
-                      globals.id = row[0];
-                    }
-                    if (globals.id == null) {
-                      _showMyDialog();
+                    if (response.statusCode != 200) {
+                      _showMyDialog("Invalid Username or Password");
                     } else {
+                      var respj = jsonDecode(response.body);
+                      globals.id = respj["user"]['id'];
+                      globals.sus = respj["user"]['tag_suspicious'];
+                      globals.fraud = respj["user"]['tag_fraud'];
+                      globals.block = respj["user"]['blocked'];
+                      setlocal(globals.state, respj);
+
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                             builder: (context) =>

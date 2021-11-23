@@ -19,11 +19,6 @@ Future<void> main() async {
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.last;
 
-  globals.connection = PostgreSQLConnection(
-      "database-1.c1ib3yeuljpm.us-east-1.rds.amazonaws.com", 5432, "fareseer",
-      username: "postgres", password: "Fareseer");
-  await globals.connection.open();
-
   runApp(
     MaterialApp(
       theme: ThemeData.dark(),

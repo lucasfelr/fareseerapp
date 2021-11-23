@@ -89,7 +89,7 @@ class _HCEpageState extends State<HCEpage> {
       await NfcEmulator.stopNfcEmulator();
     } else {
       await NfcEmulator.startNfcEmulator(
-          "666B65630001", globals.id, "79e64d05ed6475d3acf405d6a9cd506b");
+          "666B65630001", globals.id);
     }
     setState(() {
       _started = !_started;

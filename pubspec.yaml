@@ -32,10 +32,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   settings_ui: ^1.0.0
   nfc_manager: ^3.1.0
-  webview_flutter: ^2.1.2
   postgres: ^2.4.2
   nfc_emulator: 
     path: ./nfc_emulator
+  http: ^0.13.4
+  localstorage: ^4.0.0+1
+  dio: ^4.0.4
+  webview_flutter: ^2.3.1
   
   
 dev_dependencies:

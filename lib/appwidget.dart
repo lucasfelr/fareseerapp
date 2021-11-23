@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:ola_mundo/camera.dart';
-import 'package:ola_mundo/nfcpage.dart';
 import 'appcontroller.dart';
 import 'login.dart';
 import 'camera.dart';

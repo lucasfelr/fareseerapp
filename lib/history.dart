@@ -68,8 +68,7 @@ class _HistoryState extends State<History> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl:
-              'https://support.google.com/chrome/answer/95589?hl=pt-BR&co=GENIE.Platform%3DAndroid',
+          initialUrl: 'https://www.fareseer.site/home',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

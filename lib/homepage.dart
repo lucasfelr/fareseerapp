@@ -8,7 +8,6 @@ import 'appcontroller.dart';
 import 'credits.dart';
 import 'history.dart';
 import 'login.dart';
-import 'nfcpage.dart';
 import 'hcepage.dart';
 import 'profile.dart';
 
@@ -26,6 +25,20 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  String setText() {
+    var text;
+    if (globals.sus) {
+      text = "Status: Suspicious";
+    } else if (globals.fraud) {
+      text = "Status: Fraudulent";
+    } else if (globals.block) {
+      text = "Status: Blocked";
+    } else {
+      text = "Status: Validated";
+    }
+    return text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +57,7 @@ class HomePageState extends State<HomePage> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: 'Status: Validated ',
+                    text: setText(),
                     style: TextStyle(color: Colors.black, fontSize: 10),
                   ),
                 ),

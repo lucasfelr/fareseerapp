@@ -68,7 +68,7 @@ class _ProfileState extends State<Profile> {
       // to allow calling Scaffold.of(context) so we can show a snackbar.
       body: Builder(builder: (BuildContext context) {
         return WebView(
-          initialUrl: 'https://facebook.com',
+          initialUrl: 'https://www.fareseer.site/account',
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);

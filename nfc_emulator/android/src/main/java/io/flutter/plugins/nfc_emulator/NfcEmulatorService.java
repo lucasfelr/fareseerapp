@@ -28,7 +28,7 @@ public class NfcEmulatorService extends HostApduService {
     private static final String GET_DATA_APDU_HEADER = "00CA0000";
 
     // "OK" status word sent in response to SELECT AID command (0x9000)
-    private static final byte[] SELECT_OK_SW = hexStringToByteArray("cd22c716");
+    private static final byte[] SELECT_OK_SW = hexStringToByteArray("9000");
 
     // "UNKNOWN" status word sent in response to invalid APDU command (0x0000)
     private static final byte[] UNKNOWN_CMD_SW = hexStringToByteArray("0000");
